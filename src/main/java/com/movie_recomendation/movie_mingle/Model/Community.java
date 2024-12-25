@@ -7,35 +7,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Users {
+public class Community {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(unique=true)
-    private String username;
+    private String name;
 
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private Users owner;
 
-    @Column(unique = true)
-    private String email;
-
-    private boolean emailVerified = false;
-
-    @OneToMany(mappedBy = "owner")
-    private Set<Community> ownedCommunities;
-
-    @ManyToMany(mappedBy = "members")
-    private Set<Community> memberCommunities;
-
+    @ManyToMany
+    @JoinTable
+    private Set<Users> members;
 }
