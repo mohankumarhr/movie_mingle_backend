@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MovieService {
@@ -25,10 +26,12 @@ public class MovieService {
         List<MovieResponse> movieResponses = new ArrayList<>();
         for (Movies movie : movies) {
             MovieResponse movieResponse = new MovieResponse();
+            movieResponse.setId(movie.getId());
             movieResponse.setTmdb(movie.getTmdb_id());
             movieResponse.setTitle(movie.getTitle());
             movieResponse.setUrl(movie.getUrl());
             movieResponse.setUsername(movie.getUser().getUsername());
+            movieResponse.setLiked_users(movie.getLiked_users());
             movieResponses.add(movieResponse);
         }
         return movieResponses;
@@ -54,5 +57,30 @@ public class MovieService {
     public List<Movies> getMoviesByUser(String username) {
         Users user = userRepo.findByUsername(username);
         return movieRepo.findByUser(user);
+    }
+
+    public String likeMovie(int id, String username) {
+        Movies movie = getMovieById(id);
+        Set<String> linked = movie.getLiked_users();
+        if (linked.contains(username)) {
+            return "Liked already Movie Successfully";
+        }
+        linked.add(username);
+        movie.setLiked_users(linked);
+        movieRepo.save(movie);
+        return "Movie Liked Successfully";
+    }
+
+    public String dislikeMovie(int id, String username) {
+        Movies movie = getMovieById(id);
+        Set<String> linked = movie.getLiked_users();
+        if (linked.contains(username)) {
+            linked.remove(username);
+            movie.setLiked_users(linked);
+            movieRepo.save(movie);
+            return "disliked Movie Successfully";
+        }
+
+        return "Movie No liked";
     }
 }

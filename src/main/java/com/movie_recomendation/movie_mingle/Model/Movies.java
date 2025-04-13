@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,5 +24,7 @@ public class Movies {
     private String url;
     @ManyToOne
     private Users user;
+    @ElementCollection
+    private Set<String> liked_users = new HashSet<>();
 
 }

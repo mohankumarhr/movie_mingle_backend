@@ -7,8 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -22,10 +21,13 @@ public class Community {
 
     private String name;
 
+    @ElementCollection
+    private Map<Integer, LikesEntry> movies = new HashMap<>();
+
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private Users owner;
-
+    
     @ManyToMany
     @JoinTable
     private Set<Users> members;

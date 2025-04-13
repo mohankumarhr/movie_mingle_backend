@@ -71,6 +71,16 @@ public class UserController {
         return movieService.addMovie(username, movie);
    }
 
+   @PostMapping("/likemovie")
+   public String LikeMovie(@RequestParam int id, @RequestParam String username) {
+        return movieService.likeMovie(id, username);
+   }
+
+   @PostMapping("/dislikemovie")
+    public String disLikeMovie(@RequestParam int id, @RequestParam String username) {
+        return movieService.dislikeMovie(id, username);
+    }
+
    @DeleteMapping("/delete")
    public  String deleteMovie(@RequestParam int id) {
         return movieService.deleteMovie(id);
