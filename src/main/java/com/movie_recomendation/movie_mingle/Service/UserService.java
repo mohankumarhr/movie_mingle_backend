@@ -44,8 +44,9 @@ public class UserService {
         userRepo.save(user);
         String token = UUID.randomUUID().toString();
         createVerificationToken(user, token);
-
-        String verificationLink = "http://localhost:8080/verify?token=" + token;
+        String url = "https://movieminglebackend-production.up.railway.app";
+//      String url  = "http://localhost:8080";
+        String verificationLink = url + "/verify?token=" + token;
         emailService.sendEmail(user.getEmail(), "Email Verification", "Click the link to verify your email: " + verificationLink);
         return user;
     }
