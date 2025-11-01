@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf(Customizer -> Customizer.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                    .requestMatchers("/register","/login","/allmovies").permitAll()
+                    .requestMatchers("/register","/login","/allmovies","/").permitAll()
                     .requestMatchers("/verify**").permitAll()
                     .requestMatchers("/resendverification","/forgotpassword").permitAll()
                     .anyRequest().authenticated()
