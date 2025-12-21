@@ -41,4 +41,19 @@ public class TMDBService {
 
     }
 
+    public JsonNode getMovieDetails(int movieId) {
+
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/movie/" + movieId)
+                        .queryParam("language", "en-US")
+                        .build())
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorizationKey)
+                .retrieve()
+                .bodyToMono(JsonNode.class)
+
+                .block();
+    }
+
 }

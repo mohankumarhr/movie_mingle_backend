@@ -20,4 +20,9 @@ public class TMDBController {
         return tmdbService.searchMovie(query);
     }
 
+    @GetMapping("/{movieId}")
+    public JsonNode getMovieDetails(@PathVariable int movieId) {
+        return tmdbService.getMovieDetails(movieId);
+    }
+
 }
